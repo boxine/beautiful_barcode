@@ -27,3 +27,7 @@ Command line:
 ```sh
 $ python -m beautiful_barcode 012345678905 -o output.svg
 ```
+
+# License
+
+[MIT](LICENSE)
