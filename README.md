@@ -1,5 +1,5 @@
 # beautiful_barcode
-## Generate well-formatted, production-ready Barcodes.
+Generate well-formatted, production-ready Barcodes.
 
 By default, existing Python barcode libraries like [python-barcode](https://pypi.org/project/python-barcode/) generate good barcodes, but any and all formatting of the text is left up to the user. beautiful_barcode generates a nicely formatted barcode with interleaved text out of the box:
 
@@ -22,7 +22,7 @@ $ pip install beautiful_barcode
 >>> UPCA('012345678905').write('output.svg')
 ```
 
-Command-line:
+Command line:
 
 ```sh
 $ python -m beautiful_barcode 012345678905 -o output.svg
