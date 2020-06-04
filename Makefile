@@ -8,7 +8,7 @@ lint:
 	pipenv run flake8 .
 
 pypi:
-	python setup.py sdist bdist_wheel upload
+	python3 setup.py sdist bdist_wheel upload
 
 release: lint test
 	if test -z "${VERSION}"; then echo VERSION missing; exit 1; fi
