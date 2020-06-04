@@ -95,7 +95,7 @@ def make_renderer(spec):
 
 
 NAMED_RENDERERS = {
-    'auto': SimpleTextSVGRenderer,  # Subject to change
+    'auto': PathSVGRenderer,  # Subject to change
     'simple': SimpleTextSVGRenderer,
     'inkscape': InkscapeSVGRenderer,
     'path': PathSVGRenderer,
