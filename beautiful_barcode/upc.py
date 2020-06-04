@@ -19,16 +19,21 @@ _UPC_MODULE_COUNT = 95
 
 
 def calc_upc_checksum(upc):
-    assert isinstance(upc, str)
-    assert re.match(r'^[0-9]{12}$', upc)
     return (- sum(
         (3 if pos % 2 == 0 else 1) * num
         for pos, num in enumerate(map(int, upc[:-1])))) % 10
 
 
 class UPCA(Barcode):
-    def __init__(self, upc):
+    def __init__(self, upc: str):
         super().__init__()
+
+        assert isinstance(upc, str)
+        if not re.match(r'^[0-9]{12}$', upc):
+            raise ValueError(f'UPC {upc!r} is not 12 latin digits')
+        upc_checksum = calc_upc_checksum(upc)
+        if upc_checksum != int(upc[-1]):
+            raise ValueError(f'UPC checksum of {upc} should be {upc_checksum}')
 
         self.upc = upc
 
