@@ -22,4 +22,7 @@ release: lint test
 	git push --tags
 	$(MAKE) pypi
 
-.PHONY: install test lint pypi release
+clean:
+	rm -rf build dist beautiful_barcode.egg-info
+
+.PHONY: install test lint pypi release clean
