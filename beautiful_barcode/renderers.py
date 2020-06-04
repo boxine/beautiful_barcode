@@ -74,6 +74,7 @@ _DIGIT_WIDTH = {
     '0': 12,
 }
 
+
 class PathSVGRenderer(SVGRenderer):
     def text(self, characters, x, y):
         for char in characters:
