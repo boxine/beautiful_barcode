@@ -28,6 +28,23 @@ Command line:
 $ python -m beautiful_barcode 012345678905 -o output.svg
 ```
 
+# Developing
+
+Install Python 3 (3.7 or upwards), pipenv (`pip install pipenv`) and `make`.
+
+Then you can install the dependencies with
+
+```
+$ make install
+```
+
+Run tests and linting with
+
+```
+$ make test
+$ make lint
+```
+
 # License
 
 [MIT](LICENSE)
