@@ -1,28 +1,71 @@
-install:
-	pipenv install --dev
+SHELL := /bin/bash
+MAX_LINE_LENGTH := 119
+POETRY_VERSION := $(shell poetry --version 2>/dev/null)
 
-test:
-	cd test && pipenv run python3 -m unittest
+help: ## List all commands
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9 -]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-lint:
-	pipenv run flake8 .
+check-poetry:
+	@if [[ "${POETRY_VERSION}" == *"Poetry"* ]] ; \
+	then \
+		echo "Found ${POETRY_VERSION}, ok." ; \
+	else \
+		echo 'Please install poetry first, with e.g.:' ; \
+		echo 'make install-poetry' ; \
+		exit 1 ; \
+	fi
 
-pypi:
-	python3 setup.py sdist bdist_wheel upload
+install-poetry: ## install or update poetry
+	@if [[ "${POETRY_VERSION}" == *"Poetry"* ]] ; \
+	then \
+		echo 'Update poetry v$(POETRY_VERSION)' ; \
+		poetry self update ; \
+	else \
+		echo 'Install poetry' ; \
+		curl -sSL "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python3 ; \
+	fi
 
-release: lint test
-	if test -z "${VERSION}"; then echo VERSION missing; exit 1; fi
-	sed -i "s#^\(__version__\s*=\s*'\)[^']*'\$$#\1${VERSION}'#" beautiful_barcode/__init__.py
-	sed -i "s#^\(\s*version=\s*'\)[^']*\(',.*\)\$$#\1${VERSION}\2#" setup.py
-	git diff
-	git add beautiful_barcode/__init__.py setup.py
-	git commit -m "release ${VERSION}"
-	git tag "v${VERSION}"
-	git push
-	git push --tags
-	$(MAKE) pypi
+install: check-poetry ## install via poetry
+	poetry install
 
-clean:
-	rm -rf build dist beautiful_barcode.egg-info
+update: check-poetry ## Update the dependencies as according to the pyproject.toml file
+	poetry update
 
-.PHONY: install test lint pypi release clean
+lint: ## Run code formatters and linter
+	poetry run flynt --fail-on-change --line_length=${MAX_LINE_LENGTH} beautiful_barcode
+	poetry run isort --check-only beautiful_barcode
+	poetry run flake8 beautiful_barcode
+
+fix-code-style: ## Fix code formatting
+	poetry run flynt --line_length=${MAX_LINE_LENGTH} beautiful_barcode
+	poetry run autopep8 --ignore-local-config --max-line-length=${MAX_LINE_LENGTH} --aggressive --aggressive --in-place --recursive beautiful_barcode
+	poetry run isort beautiful_barcode
+
+tox-listenvs: check-poetry ## List all tox test environments
+	poetry run tox --listenvs
+
+tox: check-poetry ## Run pytest via tox with all environments
+	poetry run tox
+
+tox-py36: check-poetry ## Run pytest via tox with *python v3.6*
+	poetry run tox -e py36
+
+tox-py37: check-poetry ## Run pytest via tox with *python v3.7*
+	poetry run tox -e py37
+
+tox-py38: check-poetry ## Run pytest via tox with *python v3.8*
+	poetry run tox -e py38
+
+tox-py39: check-poetry ## Run pytest via tox with *python v3.9*
+	poetry run tox -e py39
+
+pytest: check-poetry ## Run pytest
+	poetry run pytest
+
+pytest-ci: check-poetry ## Run pytest with CI settings
+	poetry run pytest -c pytest-ci.ini
+
+publish: ## Release new version to PyPi
+	poetry run publish
+
+.PHONY: help install lint fix pytest publish
