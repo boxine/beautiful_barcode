@@ -1,7 +1,13 @@
 import unittest
+from pathlib import Path
 
 import tutils  # noqa
+
+import beautiful_barcode
 from beautiful_barcode import UPCA
+
+
+BASE_PATH = Path(beautiful_barcode.__file__).parent.parent
 
 
 class UPCTest(unittest.TestCase):
@@ -25,3 +31,24 @@ class UPCTest(unittest.TestCase):
             UPCA('12345678901')
         with self.assertRaisesRegex(ValueError, r'UPC checksum of 123456789013 should be 2'):
             UPCA('123456789013')
+
+
+class PathSVGRendererTest(unittest.TestCase):
+    def test_render_svg(self):
+        svg = UPCA('012345678905').render(renderer='path')
+        assert b'<svg version="1.1"' in svg
+        assert b'</svg>' in svg
+
+        reference_file = Path(BASE_PATH, 'example_path.svg')
+        assert reference_file.is_file()
+        with reference_file.open('rb') as f:
+            reference = f.read()
+
+        if reference != svg:
+
+            # Just "update" the example file for easy commit a new version
+            # And you can also see the difference via git ;)
+            with reference_file.open('wb') as f:
+                f.write(svg)
+
+            assert reference == svg
