@@ -1,5 +1,9 @@
 build
 dist
+.coverage
 beautiful_barcode.egg-info
 *.pyc
-
+.tox
+.idea
+.pytest_cache
+/poetry.lock

@@ -1,8 +1,7 @@
 import argparse
 import sys
 
-from . import renderers
-from . import UPCA
+from . import UPCA, renderers
 
 
 def main():
