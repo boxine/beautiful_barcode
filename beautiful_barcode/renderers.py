@@ -47,6 +47,15 @@ class InkscapeSVGRenderer(SimpleTextSVGRenderer):
         return proc.stdout
 
 
+class InkscapeEPSRenderer(SimpleTextSVGRenderer):
+    def to_bytes(self):
+        plain_svg = super().to_bytes()
+        proc = subprocess.run(
+            ['inkscape', '--export-text-to-path', '-', '--export-eps', '-'],
+            input=plain_svg, stdout=subprocess.PIPE, check=True)
+        return proc.stdout
+
+
 # Digits as paths (so that they render the same on every machine, no matter the local fonts).
 # Picked from our template. Looks to be just Arial or a variant thereof.
 _DIGIT_PATH = {
@@ -98,5 +107,6 @@ NAMED_RENDERERS = {
     'auto': PathSVGRenderer,  # Subject to change
     'simple': SimpleTextSVGRenderer,
     'inkscape': InkscapeSVGRenderer,
+    'inkscape_eps': InkscapeEPSRenderer,
     'path': PathSVGRenderer,
 }
