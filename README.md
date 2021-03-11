@@ -7,7 +7,7 @@ By default, existing Python barcode libraries like [python-barcode](https://pypi
 
 Depending on your renderer (and true by default), text in the barcode is *not* an SVG `<text>` element, as such an elment may render differently on different machines depending on font availability.
 
-This library is currently limited to UPC-A and SVG – that's all we (the original authors) needed. Patches welcome!
+This library is currently limited to UPC-A and EPS/SVG – that's all we (the original authors) needed. Patches welcome!
 
 # Installation
 
