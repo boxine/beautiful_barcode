@@ -7,7 +7,7 @@ By default, existing Python barcode libraries like [python-barcode](https://pypi
 
 Depending on your renderer (and true by default), text in the barcode is *not* an SVG `<text>` element, as such an elment may render differently on different machines depending on font availability.
 
-This library is currently limited to UPC-A and EPS/SVG – that's all we (the original authors) needed. Patches welcome!
+This library is currently limited to UPC-A/EAN and EPS/SVG – that's all we (the original authors) needed. Patches welcome!
 
 # Installation
 
@@ -18,14 +18,14 @@ $ pip install beautiful_barcode
 # Usage
 
 ```
->>> from beautiful_barcode import UPCA
->>> UPCA('012345678905').write('output.svg')
+>>> from beautiful_barcode import gtin
+>>> gtin('123456789012').write('output.svg')
 ```
 
 Command line:
 
 ```sh
-$ python -m beautiful_barcode 012345678905 -o output.svg
+$ python -m beautiful_barcode 123456789012 -o output.svg
 ```
 
 ## Quickstart

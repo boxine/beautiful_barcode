@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from . import UPCA, renderers
+from . import gtin, renderers
 
 
 def main():
@@ -10,10 +10,12 @@ def main():
     parser.add_argument(
         '-r', '--renderer', default='auto', choices=renderers.NAMED_RENDERERS.keys(),
         help='Renderer implementation to use.')
-    parser.add_argument('NUMBER', help='UPC-A number, for example 012345678905')
+    parser.add_argument(
+        'NUMBER',
+        help='UPC-A or EAN number, for example 123456789012 or 4251192108913')
     args = parser.parse_args()
 
-    barcode = UPCA(args.NUMBER)
+    barcode = gtin(args.NUMBER)
     render_kwargs = {
         'renderer': args.renderer,
     }
