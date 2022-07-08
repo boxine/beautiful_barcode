@@ -18,8 +18,8 @@ $ pip install beautiful_barcode
 # Usage
 
 ```
->>> from beautiful_barcode import gtin
->>> gtin('123456789012').write('output.svg')
+>>> from beautiful_barcode import GTIN
+>>> GTIN('123456789012').write('output.svg')
 ```
 
 Command line:

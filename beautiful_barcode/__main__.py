@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from . import gtin, renderers
+from . import GTIN, renderers
 
 
 def main():
@@ -15,7 +15,7 @@ def main():
         help='UPC-A or EAN number, for example 123456789012 or 4251192108913')
     args = parser.parse_args()
 
-    barcode = gtin(args.NUMBER)
+    barcode = GTIN(args.NUMBER)
     render_kwargs = {
         'renderer': args.renderer,
     }

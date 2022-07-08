@@ -1,14 +1,14 @@
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 from .ean import EAN  # noqa
 from .upc import UPCA  # noqa
 
 
-def gtin(value):
-    length = len(value)
+def GTIN(gtin):
+    length = len(gtin)
     if length == 12:
-        return UPCA(value)
+        return UPCA(gtin)
     elif length == 13:
-        return EAN(value)
+        return EAN(gtin)
     else:
         raise ValueError(f'Unsupported GTIN {gtin!r} of length {length}')
