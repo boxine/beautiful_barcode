@@ -68,4 +68,15 @@ pytest-ci: check-poetry ## Run pytest with CI settings
 publish: ## Release new version to PyPi
 	poetry run publish
 
-.PHONY: help install lint fix pytest publish
+examples: example_inkscape.svg example_path.svg example_simple.svg  ## Regenerate example files
+
+example_inkscape.svg: | beautiful_barcode
+	poetry run python -m beautiful_barcode -r inkscape -o example_inkscape.svg 123456789012
+
+example_path.svg: | beautiful_barcode
+	poetry run python -m beautiful_barcode -r path -o example_path.svg 123456789012
+
+example_simple.svg: | beautiful_barcode
+	poetry run python -m beautiful_barcode -r simple -o example_simple.svg 123456789012
+
+.PHONY: help install lint fix pytest publish examples
