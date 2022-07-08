@@ -42,7 +42,8 @@ class InkscapeSVGRenderer(SimpleTextSVGRenderer):
     def to_bytes(self):
         plain_svg = super().to_bytes()
         proc = subprocess.run(
-            ['inkscape', '--export-text-to-path', '-', '--export-plain-svg', '-'],
+            ['inkscape', '--pipe', '--export-text-to-path', '--export-plain-svg',
+             '--export-area-page', '--export-type=svg'],
             input=plain_svg, stdout=subprocess.PIPE, check=True)
         return proc.stdout
 
@@ -51,7 +52,7 @@ class InkscapeEPSRenderer(SimpleTextSVGRenderer):
     def to_bytes(self):
         plain_svg = super().to_bytes()
         proc = subprocess.run(
-            ['inkscape', '--export-text-to-path', '-', '--export-eps', '-'],
+            ['inkscape', '--pipe', '--export-text-to-path', '--export-type=eps'],
             input=plain_svg, stdout=subprocess.PIPE, check=True)
         return proc.stdout
 
@@ -60,7 +61,7 @@ class InkscapePDFRenderer(SimpleTextSVGRenderer):
     def to_bytes(self):
         plain_svg = super().to_bytes()
         proc = subprocess.run(
-            ['inkscape', '--export-text-to-path', '-', '--export-pdf', '-'],
+            ['inkscape', '--pipe', '--export-text-to-path', '--export-type=pdf'],
             input=plain_svg, stdout=subprocess.PIPE, check=True)
         return proc.stdout
 
