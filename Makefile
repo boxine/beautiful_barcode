@@ -66,7 +66,7 @@ pytest-ci: check-poetry ## Run pytest with CI settings
 	poetry run pytest -c pytest-ci.ini
 
 publish: ## Release new version to PyPi
-	poetry run publish
+	poetry run ./publish.py
 
 examples: example_inkscape.svg example_path.svg example_simple.svg  ## Regenerate example files
 

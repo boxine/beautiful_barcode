@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
     Helper to publish this Project to PyPi
 """
@@ -23,3 +25,7 @@ def publish():
     verbose_check_call('make', 'fix-code-style')  # don't publish if code style wrong
 
     poetry_publish(package_root=PACKAGE_ROOT, version=beautiful_barcode.__version__)
+
+
+if __name__ == '__main__':
+    publish()
