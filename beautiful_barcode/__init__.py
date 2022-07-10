@@ -1,4 +1,4 @@
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 from .ean import EAN  # noqa
 from .upc import UPCA  # noqa

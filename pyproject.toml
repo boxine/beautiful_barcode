@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'beautiful_barcode'
-version = "1.1.0"
+version = "1.1.2"
 description = 'Generate nicely formatted barcodes (UPC-A and EAN)'
 authors = [
     'Philipp Hagemeister <phihag@phihag.de>',
