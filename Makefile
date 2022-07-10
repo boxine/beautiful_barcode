@@ -32,12 +32,12 @@ update: check-poetry ## Update the dependencies as according to the pyproject.to
 	poetry update
 
 lint: ## Run code formatters and linter
-	poetry run flynt --fail-on-change --line_length=${MAX_LINE_LENGTH} beautiful_barcode
+	poetry run flynt --fail-on-change -ll ${MAX_LINE_LENGTH} beautiful_barcode
 	poetry run isort --check-only beautiful_barcode
 	poetry run flake8 beautiful_barcode
 
 fix-code-style: ## Fix code formatting
-	poetry run flynt --line_length=${MAX_LINE_LENGTH} beautiful_barcode
+	poetry run flynt -ll ${MAX_LINE_LENGTH} beautiful_barcode
 	poetry run autopep8 --ignore-local-config --max-line-length=${MAX_LINE_LENGTH} --aggressive --aggressive --in-place --recursive beautiful_barcode
 	poetry run isort beautiful_barcode
 
