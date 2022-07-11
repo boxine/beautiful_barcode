@@ -7,3 +7,5 @@ beautiful_barcode.egg-info
 .idea
 .pytest_cache
 /poetry.lock
+/publish.log
+
