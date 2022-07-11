@@ -27,12 +27,13 @@ class SVGRenderer:
 
 
 class SimpleTextSVGRenderer(SVGRenderer):
-    def text(self, characters, x, y):
+    def text(self, characters, x, y, scale=1):
+        font_size = 16 * scale
         text_el = self.doc.createElement('text')
         text_el.appendChild(self.doc.createTextNode(characters))
         text_el.setAttribute('x', str(x))
         text_el.setAttribute('y', str(y))
-        text_el.setAttribute('style', 'font-size: 16pt; font-family: Arial;')
+        text_el.setAttribute('style', f'font-size: {font_size}pt; font-family: Arial;')
         self.root.appendChild(text_el)
 
 
@@ -95,15 +96,16 @@ _DIGIT_WIDTH = {
 
 
 class PathSVGRenderer(SVGRenderer):
-    def text(self, characters, x, y):
+    def text(self, characters, x, y, scale=1):
+        scale_transform = '' if scale == 1 else f' scale({scale} {scale})'
         for char in characters:
             path_el = self.doc.createElement('path')
             path_el.setAttribute('d', _DIGIT_PATH[char])
             path_el.setAttribute('fill', '#000')
-            path_el.setAttribute('transform', f'translate({x}, {y})')
+            path_el.setAttribute('transform', f'translate({x}, {y}){scale_transform}')
             self.root.appendChild(path_el)
 
-            x += _DIGIT_WIDTH[char]
+            x += _DIGIT_WIDTH[char] * scale
 
 
 def make_renderer(spec):
