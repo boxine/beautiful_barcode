@@ -1,6 +1,7 @@
 import re
 
 from .barcode import Barcode
+from .exceptions import InvalidGTIN
 from .utils import module_coords
 
 
@@ -30,10 +31,10 @@ class UPCA(Barcode):
 
         assert isinstance(upc, str)
         if not re.match(r'^[0-9]{12}$', upc):
-            raise ValueError(f'UPC {upc!r} is not 12 latin digits')
+            raise InvalidGTIN(f'UPC {upc!r} is not 12 latin digits')
         upc_checksum = calc_upc_checksum(upc)
         if upc_checksum != int(upc[-1]):
-            raise ValueError(f'UPC checksum of {upc} should be {upc_checksum}')
+            raise InvalidGTIN(f'UPC checksum of {upc} should be {upc_checksum}')
 
         self.upc = upc
 

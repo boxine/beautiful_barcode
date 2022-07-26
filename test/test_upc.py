@@ -1,7 +1,7 @@
 import unittest
 
 import tutils  # noqa
-from beautiful_barcode import UPCA
+from beautiful_barcode import InvalidGTIN, UPCA
 
 
 class UPCTest(unittest.TestCase):
@@ -21,7 +21,9 @@ class UPCTest(unittest.TestCase):
         )
 
     def test_checksum(self):
-        with self.assertRaisesRegex(ValueError, r'UPC \'12345678901\' is not 12 latin digits'):
+        with self.assertRaisesRegex(InvalidGTIN, r'UPC \'12345678901\' is not 12 latin digits'):
             UPCA('12345678901')
-        with self.assertRaisesRegex(ValueError, r'UPC checksum of 123456789013 should be 2'):
+        with self.assertRaisesRegex(InvalidGTIN, r'UPC \'12345678901a\' is not 12 latin digits'):
+            UPCA('12345678901a')
+        with self.assertRaisesRegex(InvalidGTIN, r'UPC checksum of 123456789013 should be 2'):
             UPCA('123456789013')

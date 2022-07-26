@@ -1,0 +1,2 @@
+class InvalidGTIN(ValueError):
+    pass
