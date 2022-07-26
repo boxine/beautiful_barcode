@@ -1,7 +1,7 @@
 import unittest
 
 import tutils  # noqa
-from beautiful_barcode import EAN
+from beautiful_barcode import EAN, InvalidGTIN
 from beautiful_barcode.ean import _L_DIGITS, _G_DIGITS, _R_DIGITS
 
 
@@ -39,14 +39,14 @@ class EANTest(unittest.TestCase):
         )
 
     def test_checksum(self):
-        with self.assertRaisesRegex(ValueError, r'EAN \'56789056789\' is not 13 latin digits'):
+        with self.assertRaisesRegex(InvalidGTIN, r'EAN \'56789056789\' is not 13 latin digits'):
             EAN('56789056789')
-        with self.assertRaisesRegex(ValueError, r'EAN \'567890567890\' is not 13 latin digits'):
+        with self.assertRaisesRegex(InvalidGTIN, r'EAN \'567890567890\' is not 13 latin digits'):
             EAN('567890567890')
-        with self.assertRaisesRegex(ValueError, r'EAN checksum of 5678905678967 should be 6'):
+        with self.assertRaisesRegex(InvalidGTIN, r'EAN checksum of 5678905678967 should be 6'):
             EAN('5678905678967')
-        with self.assertRaisesRegex(ValueError, r'EAN checksum of 4251192107550 should be 8'):
+        with self.assertRaisesRegex(InvalidGTIN, r'EAN checksum of 4251192107550 should be 8'):
             EAN('4251192107550')
-        with self.assertRaisesRegex(ValueError, r'EAN checksum of 1222222222222 should be 3'):
+        with self.assertRaisesRegex(InvalidGTIN, r'EAN checksum of 1222222222222 should be 3'):
             EAN('1222222222222')
 

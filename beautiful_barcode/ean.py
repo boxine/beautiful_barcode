@@ -1,6 +1,7 @@
 import re
 
 from .barcode import Barcode
+from .exceptions import InvalidGTIN
 from .utils import module_coords
 
 
@@ -39,10 +40,10 @@ class EAN(Barcode):
 
         assert isinstance(ean, str)
         if not re.match(r'^[0-9]{13}$', ean):
-            raise ValueError(f'EAN {ean!r} is not 13 latin digits')
+            raise InvalidGTIN(f'EAN {ean!r} is not 13 latin digits')
         checksum = calc_ean_checksum(ean)
         if checksum != int(ean[-1]):
-            raise ValueError(f'EAN checksum of {ean} should be {checksum}')
+            raise InvalidGTIN(f'EAN checksum of {ean} should be {checksum}')
 
         self.ean = ean
 
