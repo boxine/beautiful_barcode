@@ -6,6 +6,4 @@ beautiful_barcode.egg-info
 .tox
 .idea
 .pytest_cache
-/poetry.lock
 /publish.log
-
