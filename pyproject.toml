@@ -19,7 +19,7 @@ python = '>=3.6,<4.0.0'
 
 [tool.poetry.dev-dependencies]
 tox = '*'
-pytest = '*'
+pytest = '>=6.2.5'  # https://stackoverflow.com/a/69569206/35070
 pytest-randomly = '*'
 pytest-cov = '*'
 pytest-django = '*'
