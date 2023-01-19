@@ -108,10 +108,15 @@ class PathSVGRenderer(SVGRenderer):
             x += _DIGIT_WIDTH[char] * scale
 
 
-def make_renderer(spec):
+def make_renderer(spec, filename=None):
     if isinstance(spec, SVGRenderer):
         return spec  # Already a renderer, great
-    klass = NAMED_RENDERERS.get(spec, spec)
+
+    if spec == 'auto' and filename and filename.lower().endswith('.eps'):
+        klass = InkscapeEPSRenderer
+    else:
+        klass = NAMED_RENDERERS.get(spec, spec)
+
     return klass()
 
 
